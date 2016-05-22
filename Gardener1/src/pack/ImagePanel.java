@@ -12,7 +12,6 @@ import java.awt.*;
         private ImagePanel(Image img) {
             this.img = img;
             Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-            System.out.println(size);
             setPreferredSize(size);
             setMinimumSize(size);
             setMaximumSize(size);

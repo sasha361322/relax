@@ -10,8 +10,9 @@ import static pack.Gardener1.*;
  * к указанной клумбе. Время полива одной клумбы составляет 10 минут, время перемещения 5 минут.
  * После полива клумба, вне зависимости от датчика температуры, не поливается 4 часа.
  */
-class Watering_machine extends Thread{
+class Watering_machine{
     Watering_machine(){
+        machine = new ImagePanel(src, 50, 490);
         condition = Condition.stay;
     }
     void Move() throws InterruptedException {
@@ -22,16 +23,8 @@ class Watering_machine extends Thread{
         condition = Condition.move_from;
         Thread.sleep(5*MyTime);
     }
-    @Override
-    public void run() {
-        while(true) {
-            try {
-                sleep(1*MyTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    private enum Condition {stay, move_to, watering, move_from};
+    public static enum Condition {stay, move_to, watering, move_from}
     private Condition condition;
+    private static String src = "./img/watering_machine.jpg";
+    static ImagePanel machine;
 }
