@@ -1,6 +1,6 @@
 package pack;
 
-import static pack.Gardener1.*;
+import static pack.Gardener1.text;
 
 /**
  * Created by Александр on 08.04.2016.1.
@@ -13,18 +13,38 @@ import static pack.Gardener1.*;
 class Watering_machine{
     Watering_machine(){
         machine = new ImagePanel(src, 50, 490);
-        condition = Condition.stay;
+//        condition = Condition.stay;
     }
-    void Move() throws InterruptedException {
-        condition = Condition.move_to;
-        Thread.sleep(5*MyTime);
-        condition = Condition.watering;
-        Thread.sleep(10*MyTime);
-        condition = Condition.move_from;
-        Thread.sleep(5*MyTime);
+    void Move_to() {
+//        condition = Condition.move_to;
+        machine.Move(0, -60);
+        temp++;
+        if (temp==5){
+            temp = 0;
+            Water();
+            text.setText("Watering");
+        }
     }
-    public static enum Condition {stay, move_to, watering, move_from}
-    private Condition condition;
+    private void Water(){
+//        condition = Condition.watering;
+        temp++;
+        if(temp==10){
+            temp=0;
+            Move_from();
+        }
+    }
+    private void Move_from(){
+//        condition = Condition.move_from;
+        machine.Move(0, 60);
+        temp++;
+        if (temp == 5){
+//            condition = Condition.stay;
+            temp = 0;
+        }
+    }
+//    public static enum Condition {stay, move_to, watering, move_from}
+//    private Condition condition;
     private static String src = "./img/watering_machine.jpg";
     static ImagePanel machine;
+    private int temp = 0;
 }

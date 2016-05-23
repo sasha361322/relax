@@ -17,6 +17,9 @@ import java.awt.*;
             setMaximumSize(size);
             setSize(size);
         }
+        public void Move(int delta_x, int delta_y){
+            setLocation(getX()+delta_x, getY()+delta_y);
+        }
         @Override
         public void paintComponent(Graphics g) {
             g.drawImage(img, 0, 0, null);
