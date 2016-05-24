@@ -12,12 +12,14 @@ class MyFrame extends JFrame {
         clock = new Clock();
         stop = new Stop();
         clock.add(stop);
-        text = new JTextField();
-        text.setLocation(450,430);
-        text.setSize(70,20);
+        text = new JTextArea();
+        text.setLineWrap(true);
+        text.setWrapStyleWord(true);
+        text.setLocation(400,350);
+        text.setSize(200,100);
         clock.add(text);
         ImagePanel therm = new ImagePanel("./img/thermometer.jpg", 155, 20);
-        clock.add(Garden_bed.themperature);
+        clock.add(Garden_bed.temperature);
         getContentPane().add(therm);
         getContentPane().add(Garden_bed.garden);
         getContentPane().add(Watering_machine.machine);

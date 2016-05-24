@@ -2,10 +2,12 @@ package pack;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import static pack.Gardener1.df;
 
 class Clock extends JPanel {
     Clock(){
@@ -24,10 +26,12 @@ class Clock extends JPanel {
         String time = df.format(now.getTime());
         gr.setColor(Color.BLACK);
         gr.drawString(time, x_Location+7, y_Location+35);
-        now.add(Calendar.SECOND, 1);
+        now.add(Calendar.MILLISECOND, 1550);
         setVisible(true);
     }
-    private static SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss");
+    Date getTime(){
+        return now.getTime();
+    }
     private int x_Location;
     private int y_Location;
     private static int DEFAULT_RADIUS=60;

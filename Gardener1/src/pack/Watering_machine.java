@@ -1,6 +1,8 @@
 package pack;
 
-import static pack.Gardener1.text;
+import java.util.Date;
+
+import static pack.Gardener1.*;
 
 /**
  * Created by Александр on 08.04.2016.1.
@@ -13,38 +15,39 @@ import static pack.Gardener1.text;
 class Watering_machine{
     Watering_machine(){
         machine = new ImagePanel(src, 50, 490);
-//        condition = Condition.stay;
+        condition = Condition.stay;
     }
-    void Move_to() {
-//        condition = Condition.move_to;
-        machine.Move(0, -60);
-        temp++;
-        if (temp==5){
-            temp = 0;
-            Water();
-            text.setText("Watering");
+    void Move() {
+        condition = Condition.move_to;
+        start = clock.getTime().getTime();
+    }
+    void Change(){
+        long clock_time = clock.getTime().getTime();
+        if(condition == Condition.move_to){
+            machine.Move(0, -2);
+            if ((clock_time-start)>=Minute*5){
+                condition = Condition.watering;
+                start = clock_time;
+                text.append(".\nwatering from "+df.format(new Date(start))+" to "+df.format(new Date(start+10*Minute)));
+            }
+        }
+        else  if (condition == Condition.watering){
+            if (clock_time-start>=Minute*10){
+                garden_bed.wasJustWatered();
+                condition = Condition.move_from;
+                start = clock_time;
+            }
+        }
+        else if(condition == Condition.move_from){
+            machine.Move(0, 2);
+            if ((clock_time-start)>=Minute*5){
+                condition = Condition.stay;
+            }
         }
     }
-    private void Water(){
-//        condition = Condition.watering;
-        temp++;
-        if(temp==10){
-            temp=0;
-            Move_from();
-        }
-    }
-    private void Move_from(){
-//        condition = Condition.move_from;
-        machine.Move(0, 60);
-        temp++;
-        if (temp == 5){
-//            condition = Condition.stay;
-            temp = 0;
-        }
-    }
-//    public static enum Condition {stay, move_to, watering, move_from}
-//    private Condition condition;
+    private long start=0;
+    private enum Condition {stay, move_to, watering, move_from}
+    private Condition condition;
     private static String src = "./img/watering_machine.jpg";
     static ImagePanel machine;
-    private int temp = 0;
 }
